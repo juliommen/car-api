@@ -3,7 +3,6 @@ import { Router } from "express";
 import { CategoriesRepository } from "../repositories/CategoriesRepository";
 
 export const categoryRoutes = Router();
-const categoriesRepository = new CategoriesRepository();
 
 categoryRoutes.post("/", (req, res) => {
   const { name, description } = req.body;
