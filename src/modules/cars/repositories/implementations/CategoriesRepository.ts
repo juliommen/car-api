@@ -2,15 +2,24 @@ import { Category } from "../../models/Category";
 import {
   CategoriesRepositoryInterface,
   CreateCategoryDTO,
-} from "./RepositoryInterface";
+} from "../CategoriesRepositoryInterface";
 
-export class InMemoryCategoriesRepository
-  implements CategoriesRepositoryInterface
-{
+export class CategoriesRepository implements CategoriesRepositoryInterface {
   private categories: Category[];
-  constructor() {
+
+  private constructor() {
     this.categories = [];
   }
+
+  private static INSTANCE;
+
+  public static getInstance(): CategoriesRepository {
+    if (!CategoriesRepository.INSTANCE) {
+      CategoriesRepository.INSTANCE = new CategoriesRepository();
+    }
+    return CategoriesRepository.INSTANCE;
+  }
+
   create({ name, description }: CreateCategoryDTO) {
     const category = new Category();
     Object.assign(category, { name, description, created_at: new Date() });
