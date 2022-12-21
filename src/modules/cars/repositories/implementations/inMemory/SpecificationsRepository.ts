@@ -1,8 +1,8 @@
-import { Specification } from "../../models/Specification";
+import { Specification } from "../../../entities/Specification";
 import {
   SpecificationsRepositoryInterface,
   CreateSpecificationDTO,
-} from "../SpecificationsRepositoryInterface";
+} from "../../SpecificationsRepositoryInterface";
 
 export class SpecificationsRepository
   implements SpecificationsRepositoryInterface
@@ -21,20 +21,20 @@ export class SpecificationsRepository
     return SpecificationsRepository.INSTANCE;
   }
 
-  create({ name, description }: CreateSpecificationDTO) {
+  async create({ name, description }: CreateSpecificationDTO) {
     const specification = new Specification();
     Object.assign(specification, { name, description, created_at: new Date() });
     this.specifications.push(specification);
   }
 
-  findByName(name: string) {
+  async findByName(name: string) {
     const specification = this.specifications.find(
       (spec) => spec.name === name
     );
     return specification;
   }
 
-  list(): Specification[] {
+  async list() {
     return this.specifications;
   }
 }

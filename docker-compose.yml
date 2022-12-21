@@ -1,0 +1,31 @@
+version: "3.9"
+services:
+  postgres:
+    image: postgres
+    container_name: postgres
+    hostname: postgres
+    restart: unless-stopped
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_USER=rentcar
+      - POSTGRES_PASSWORD=rentcar
+      - POSTGRES_DB=rentcar
+    volumes:
+      - postgres:/var/lib/postgresql/data
+
+  # Important: Change localhost to postgres on .env first
+  # app:
+  #   build: .
+  #   container_name: rentcar
+  #   depends_on:
+  #     - postgres
+  #   ports:
+  #     - '3333:3333'
+  #   volumes:
+  #     - .:/usr/app
+  #   restart: always
+
+
+volumes:
+  postgres:

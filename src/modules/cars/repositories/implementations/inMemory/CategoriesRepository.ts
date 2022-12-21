@@ -1,8 +1,8 @@
-import { Category } from "../../models/Category";
+import { Category } from "../../../entities/Category";
 import {
   CategoriesRepositoryInterface,
   CreateCategoryDTO,
-} from "../CategoriesRepositoryInterface";
+} from "../../CategoriesRepositoryInterface";
 
 export class CategoriesRepository implements CategoriesRepositoryInterface {
   private categories: Category[];
