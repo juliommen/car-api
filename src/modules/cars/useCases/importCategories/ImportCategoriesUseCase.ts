@@ -1,11 +1,16 @@
 import { parse } from "csv-parse";
 import fs from "fs";
+import { inject, injectable } from "tsyringe";
 
 import { Category } from "../../entities/Category";
 import { CategoriesRepositoryInterface } from "../../repositories/CategoriesRepositoryInterface";
 
-export class ImportCategoriesUseCase {
-  constructor(private categoriesRepository: CategoriesRepositoryInterface) {}
+@injectable()
+class ImportCategoriesUseCase {
+  constructor(
+    @inject("CategoriesRepository")
+    private categoriesRepository: CategoriesRepositoryInterface
+  ) {}
 
   async execute(file: Express.Multer.File) {
     const stream = fs.createReadStream(file.path);
@@ -29,3 +34,5 @@ export class ImportCategoriesUseCase {
     });
   }
 }
+
+export { ImportCategoriesUseCase };
