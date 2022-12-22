@@ -22,9 +22,17 @@ export class SpecificationsRepository
   }
 
   async create({ name, description }: CreateSpecificationDTO) {
-    const specification = new Specification();
-    Object.assign(specification, { name, description, created_at: new Date() });
+    const specification = new Specification(name, description);
     this.specifications.push(specification);
+  }
+
+  async createMany(specifications: Specification[]): Promise<void> {
+    specifications.forEach(async (spec) => {
+      const alreadyExists = await this.findByName(spec.name);
+      if (!alreadyExists) {
+        this.specifications.push(spec);
+      }
+    });
   }
 
   async findByName(name: string) {

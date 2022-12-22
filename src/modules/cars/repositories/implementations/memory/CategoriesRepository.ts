@@ -20,18 +20,26 @@ export class CategoriesRepository implements CategoriesRepositoryInterface {
     return CategoriesRepository.INSTANCE;
   }
 
-  create({ name, description }: CreateCategoryDTO) {
-    const category = new Category();
-    Object.assign(category, { name, description, created_at: new Date() });
+  async create({ name, description }: CreateCategoryDTO) {
+    const category = new Category(name, description);
     this.categories.push(category);
   }
 
-  list() {
+  async list() {
     return this.categories;
   }
 
-  findByName(name: string) {
+  async findByName(name: string) {
     const category = this.categories.find((category) => category.name === name);
     return category;
+  }
+
+  async createMany(categories: Category[]): Promise<void> {
+    categories.forEach(async (cat) => {
+      const alreadyExists = await this.findByName(cat.name);
+      if (!alreadyExists) {
+        this.categories.push(cat);
+      }
+    });
   }
 }

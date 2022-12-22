@@ -7,6 +7,7 @@ export interface CreateSpecificationDTO {
 
 export interface SpecificationsRepositoryInterface {
   create({ name, description }: CreateSpecificationDTO): Promise<void>;
+  createMany(specifications: Specification[]): Promise<void>;
   findByName(name: string): Promise<Specification>;
   list(): Promise<Specification[]>;
 }

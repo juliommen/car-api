@@ -7,7 +7,7 @@ export interface CreateCategoryDTO {
 
 export interface CategoriesRepositoryInterface {
   create({ name, description }: CreateCategoryDTO): Promise<void>;
+  createMany(categories: Category[]): Promise<void>;
   findByName(name: string): Promise<Category>;
   list(): Promise<Category[]>;
-  createMany(categories: Category[]): Promise<void>;
 }

@@ -10,12 +10,7 @@ export class CategoriesRepository implements CategoriesRepositoryInterface {
     await prisma.category.createMany({ data: categories });
   }
   async create({ name, description }: CreateCategoryDTO) {
-    const category = new Category(name, description);
-    await prisma.category.create({
-      data: {
-        ...category,
-      },
-    });
+    await prisma.category.create({ data: new Category(name, description) });
   }
 
   async list() {

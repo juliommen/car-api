@@ -9,12 +9,13 @@ export class SpecificationsRepository
   implements SpecificationsRepositoryInterface
 {
   async create({ name, description }: CreateSpecificationDTO) {
-    const specification = new Specification(name, description);
     await prisma.specification.create({
-      data: {
-        ...specification,
-      },
+      data: new Specification(name, description),
     });
+  }
+
+  async createMany(specifications: Specification[]): Promise<void> {
+    await prisma.specification.createMany({ data: specifications });
   }
 
   async list() {
