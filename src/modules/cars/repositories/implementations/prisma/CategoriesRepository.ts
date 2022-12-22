@@ -6,6 +6,9 @@ import {
 } from "../../CategoriesRepositoryInterface";
 
 export class CategoriesRepository implements CategoriesRepositoryInterface {
+  async createMany(categories: Category[]) {
+    await prisma.category.createMany({ data: categories });
+  }
   async create({ name, description }: CreateCategoryDTO) {
     const category = new Category(name, description);
     await prisma.category.create({

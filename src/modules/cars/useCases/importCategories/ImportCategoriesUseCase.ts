@@ -1,42 +1,31 @@
 import { parse } from "csv-parse";
 import fs from "fs";
 
+import { Category } from "../../entities/Category";
 import { CategoriesRepositoryInterface } from "../../repositories/CategoriesRepositoryInterface";
-
-interface ImportCategory {
-  name: string;
-  description: string;
-}
 
 export class ImportCategoriesUseCase {
   constructor(private categoriesRepository: CategoriesRepositoryInterface) {}
 
-  loadCategories(file: Express.Multer.File): Promise<ImportCategory[]> {
-    return new Promise((resolve, reject) => {
-      const stream = fs.createReadStream(file.path);
-      const categories: ImportCategory[] = [];
-      const parseFile = parse();
-      stream.pipe(parseFile);
+  async execute(file: Express.Multer.File) {
+    const stream = fs.createReadStream(file.path);
+    const categories: Category[] = [];
+    const parseFile = parse();
+    stream.pipe(parseFile);
+    await new Promise((resolve, reject) => {
       parseFile
         .on("data", async (line) => {
           const [name, description] = line;
-          categories.push({ name, description });
+          categories.push(new Category(name, description));
         })
-        .on("end", () => {
+        .on("end", async () => {
+          this.categoriesRepository.createMany(categories);
           fs.promises.unlink(file.path);
-          resolve(categories);
+          resolve("ok");
         })
-        .on("error", (err) => reject(err));
-    });
-  }
-  async execute(file: Express.Multer.File) {
-    const categories: ImportCategory[] = await this.loadCategories(file);
-    categories.forEach((category) => {
-      const { name, description } = category;
-      const existCategory = !!this.categoriesRepository.findByName(name);
-      if (!existCategory) {
-        this.categoriesRepository.create({ name, description });
-      }
+        .on("error", (err) => {
+          reject(err);
+        });
     });
   }
 }
