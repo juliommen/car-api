@@ -2,6 +2,7 @@ import { parse } from "csv-parse";
 import fs from "fs";
 import { inject, injectable } from "tsyringe";
 
+import { AppError } from "../../../../errors/AppError";
 import { Category } from "../../entities/Category";
 import { CategoriesRepositoryInterface } from "../../repositories/CategoriesRepositoryInterface";
 
@@ -17,7 +18,7 @@ class ImportCategoriesUseCase {
     const categories: Category[] = [];
     const parseFile = parse();
     stream.pipe(parseFile);
-    await new Promise((resolve, reject) => {
+    await new Promise((resolve) => {
       parseFile
         .on("data", async (line) => {
           const [name, description] = line;
@@ -26,10 +27,10 @@ class ImportCategoriesUseCase {
         .on("end", async () => {
           this.categoriesRepository.createMany(categories);
           fs.promises.unlink(file.path);
-          resolve("ok");
+          resolve(null);
         })
         .on("error", (err) => {
-          reject(err);
+          throw new AppError("Error on parsing file", 500);
         });
     });
   }
