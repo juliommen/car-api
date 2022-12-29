@@ -9,6 +9,7 @@ interface Request {
   email: string;
   password: string;
   driverLicense: string;
+  avatar: string;
 }
 
 @injectable()
@@ -18,7 +19,7 @@ class CreateUserUseCase {
     private usersRepository: UsersRepositoryInterface
   ) {}
 
-  async execute({ name, driverLicense, email, password }: Request) {
+  async execute({ name, driverLicense, email, password, avatar }: Request) {
     const userAlreadyExists = await this.usersRepository.findByEmail(email);
     if (userAlreadyExists) {
       throw new AppError("User already exists!", 401);
@@ -29,6 +30,7 @@ class CreateUserUseCase {
       driverLicense,
       email,
       password: pwdHash,
+      avatar,
     });
   }
 }

@@ -22,6 +22,7 @@ export async function verifyToken(
     if (!user) {
       throw new AppError("Invalid token!", 401);
     }
+    req.user = { userId: user.id };
   } catch (error) {
     throw new AppError("Invalid token!", 401);
   }

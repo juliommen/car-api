@@ -32,4 +32,5 @@ model User {
   driverLicense String
   admin         Boolean
   createdAt     DateTime @default(now())
+  avatar        String
 }

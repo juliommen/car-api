@@ -8,12 +8,14 @@ export class User {
   driverLicense: string;
   admin: boolean;
   createdAt: Date;
+  avatar: string;
 
   constructor(
     name: string,
     email: string,
     password: string,
-    driverLicense: string
+    driverLicense: string,
+    avatar: string
   ) {
     this.id = randomUUID();
     this.name = name;
@@ -22,5 +24,6 @@ export class User {
     this.driverLicense = driverLicense;
     this.admin = false;
     this.createdAt = new Date();
+    this.avatar = avatar;
   }
 }
