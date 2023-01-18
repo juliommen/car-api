@@ -1,3 +1,4 @@
+import "reflect-metadata";
 import { compare } from "bcrypt";
 import { sign } from "jsonwebtoken";
 import { inject, injectable } from "tsyringe";
