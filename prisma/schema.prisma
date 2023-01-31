@@ -15,6 +15,7 @@ model Category {
   name        String
   description String
   createdAt   DateTime @default(now())
+  Car         Car[]
 }
 
 model Specification {
@@ -33,4 +34,18 @@ model User {
   admin         Boolean
   createdAt     DateTime @default(now())
   avatar        String
+}
+
+model Car {
+  id           String   @id
+  name         String
+  description  String
+  dailyRate    Float
+  available    Boolean  @default(true)
+  licensePlate String   @unique
+  fineAmount   Float
+  brand        String
+  category     Category @relation(fields: [categoryId], references: [id])
+  categoryId   String
+  createdAt    DateTime @default(now())
 }

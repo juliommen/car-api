@@ -1,6 +1,8 @@
 import { container } from "tsyringe";
 
+import { CarsRepositoryInterface } from "../../modules/cars/repositories/CarsRepositoryInterface";
 import { CategoriesRepositoryInterface } from "../../modules/cars/repositories/CategoriesRepositoryInterface";
+import { CarsRepository } from "../../modules/cars/repositories/implementations/prisma/CarsRepository";
 import { CategoriesRepository } from "../../modules/cars/repositories/implementations/prisma/CategoriesRepository";
 import { SpecificationsRepository } from "../../modules/cars/repositories/implementations/prisma/SpecificationsRepository";
 import { SpecificationsRepositoryInterface } from "../../modules/cars/repositories/SpecificationsRepositoryInterface";
@@ -20,4 +22,9 @@ container.registerSingleton<SpecificationsRepositoryInterface>(
 container.registerSingleton<UsersRepositoryInterface>(
   "UsersRepository",
   UsersRepository
+);
+
+container.registerSingleton<CarsRepositoryInterface>(
+  "CarsRepository",
+  CarsRepository
 );
