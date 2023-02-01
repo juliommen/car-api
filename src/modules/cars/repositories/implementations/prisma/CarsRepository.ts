@@ -3,6 +3,8 @@ import { Car } from "../../../entities/Car";
 import {
   CreateCarDTO,
   CarsRepositoryInterface,
+  ListCarDTO,
+  CreateCarSpecificationsDTO,
 } from "../../CarsRepositoryInterface";
 
 export class CarsRepository implements CarsRepositoryInterface {
@@ -38,8 +40,31 @@ export class CarsRepository implements CarsRepositoryInterface {
     return car;
   }
 
-  async listAvailableCars(): Promise<Car[]> {
-    const cars = await prisma.car.findMany({ where: { available: true } });
+  async listAvailableCars({
+    name,
+    brand,
+    categoryId,
+  }: ListCarDTO): Promise<Car[]> {
+    let cars = await prisma.car.findMany({
+      include: { specifications: true },
+      where: { available: true },
+    });
+    if (name) {
+      cars = cars.filter((car) => car.name === name);
+    }
+    if (categoryId) {
+      cars = cars.filter((car) => car.categoryId === categoryId);
+    }
+    if (brand) {
+      cars = cars.filter((car) => car.brand === brand);
+    }
     return cars;
+  }
+
+  createSpecifications({
+    carId,
+    specifications,
+  }: CreateCarSpecificationsDTO): Promise<void> {
+    throw new Error("Method not implemented.");
   }
 }

@@ -1,5 +1,7 @@
 import { randomUUID } from "crypto";
 
+import { Specification } from "./Specification";
+
 export class Car {
   id: string;
   name: string;
@@ -11,6 +13,7 @@ export class Car {
   brand: string;
   categoryId: string;
   createdAt: Date;
+  specifications?: Specification[];
 
   constructor(
     name: string,

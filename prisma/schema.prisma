@@ -23,6 +23,7 @@ model Specification {
   name        String
   description String
   createdAt   DateTime @default(now())
+  cars        Car[]
 }
 
 model User {
@@ -37,15 +38,24 @@ model User {
 }
 
 model Car {
-  id           String   @id
-  name         String
-  description  String
-  dailyRate    Float
-  available    Boolean  @default(true)
-  licensePlate String   @unique
-  fineAmount   Float
-  brand        String
-  category     Category @relation(fields: [categoryId], references: [id])
-  categoryId   String
-  createdAt    DateTime @default(now())
+  id             String          @id
+  name           String
+  description    String
+  dailyRate      Float
+  available      Boolean         @default(true)
+  licensePlate   String          @unique
+  fineAmount     Float
+  brand          String
+  category       Category        @relation(fields: [categoryId], references: [id])
+  categoryId     String
+  createdAt      DateTime        @default(now())
+  specifications Specification[]
+  CarsImages     CarsImages[]
+}
+
+model CarsImages {
+  id        String   @id
+  car       Car      @relation(fields: [carId], references: [id])
+  carId     String
+  createdAt DateTime @default(now())
 }

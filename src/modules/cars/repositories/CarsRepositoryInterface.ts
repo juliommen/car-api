@@ -10,6 +10,17 @@ export interface CreateCarDTO {
   categoryId: string;
 }
 
+export interface ListCarDTO {
+  name?: string;
+  brand?: string;
+  categoryId?: string;
+}
+
+export interface CreateCarSpecificationsDTO {
+  carId: string;
+  specificationsId: string[];
+}
+
 export interface CarsRepositoryInterface {
   create({
     name,
@@ -22,5 +33,9 @@ export interface CarsRepositoryInterface {
   }: CreateCarDTO): Promise<void>;
   findByName(name: string): Promise<Car>;
   findByLicensePlate(licensePlate: string): Promise<Car>;
-  listAvailableCars(): Promise<Car[]>;
+  listAvailableCars({ name, brand, categoryId }: ListCarDTO): Promise<Car[]>;
+  createSpecifications({
+    carId,
+    specifications,
+  }: CreateCarSpecificationsDTO): Promise<void>;
 }

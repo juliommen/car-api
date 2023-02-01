@@ -14,3 +14,4 @@ carRoutes.use(verifyToken);
 
 carRoutes.post("/", verifyAdmin, createCarController.handle);
 carRoutes.get("/", listCarsController.handle);
+carRoutes.post("/specifications/:id");

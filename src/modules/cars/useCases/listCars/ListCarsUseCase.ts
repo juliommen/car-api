@@ -1,6 +1,9 @@
 import { inject, injectable } from "tsyringe";
 
-import { CarsRepositoryInterface } from "../../repositories/CarsRepositoryInterface";
+import {
+  CarsRepositoryInterface,
+  ListCarDTO,
+} from "../../repositories/CarsRepositoryInterface";
 
 @injectable()
 class ListCarsUseCase {
@@ -8,8 +11,12 @@ class ListCarsUseCase {
     @inject("CarsRepository")
     private carsRepository: CarsRepositoryInterface
   ) {}
-  async execute() {
-    const cars = await this.carsRepository.listAvailableCars();
+  async execute({ brand, categoryId, name }: ListCarDTO) {
+    const cars = await this.carsRepository.listAvailableCars({
+      brand,
+      categoryId,
+      name,
+    });
     return cars;
   }
 }
