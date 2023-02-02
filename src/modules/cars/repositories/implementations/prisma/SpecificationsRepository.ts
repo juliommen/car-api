@@ -8,7 +8,7 @@ import {
 export class SpecificationsRepository
   implements SpecificationsRepositoryInterface
 {
-  async create({ name, description }: CreateSpecificationDTO) {
+  async create({ name, description }: CreateSpecificationDTO): Promise<void> {
     await prisma.specification.create({
       data: new Specification(name, description),
     });
@@ -18,12 +18,12 @@ export class SpecificationsRepository
     await prisma.specification.createMany({ data: specifications });
   }
 
-  async list() {
-    const categories = await prisma.specification.findMany();
-    return categories;
+  async list(): Promise<Specification[]> {
+    const specifications = await prisma.specification.findMany();
+    return specifications;
   }
 
-  async findByName(name: string) {
+  async findByName(name: string): Promise<Specification> {
     const specification = await prisma.specification.findFirst({
       where: { name },
     });

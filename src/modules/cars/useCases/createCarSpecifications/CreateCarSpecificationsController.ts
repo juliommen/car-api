@@ -11,8 +11,8 @@ export class CreateCarSpecificationsController {
     const { carId } = req.params;
     const { specificationsId } = req.body;
     const cars = await createCarSpecifications.execute({
-      carId,
-      specificationsId,
+      carId: carId as string,
+      specificationsId: specificationsId as string[],
     });
     return res.json(cars);
   }

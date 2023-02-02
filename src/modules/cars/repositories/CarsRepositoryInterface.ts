@@ -1,4 +1,5 @@
 import { Car } from "../entities/Car";
+import { Specification } from "../entities/Specification";
 
 export interface CreateCarDTO {
   name: string;
@@ -18,7 +19,7 @@ export interface ListCarDTO {
 
 export interface CreateCarSpecificationsDTO {
   carId: string;
-  specificationsId: string[];
+  specifications: Specification[];
 }
 
 export interface CarsRepositoryInterface {
@@ -33,6 +34,7 @@ export interface CarsRepositoryInterface {
   }: CreateCarDTO): Promise<void>;
   findByName(name: string): Promise<Car>;
   findByLicensePlate(licensePlate: string): Promise<Car>;
+  findById(id: string): Promise<Car>;
   listAvailableCars({ name, brand, categoryId }: ListCarDTO): Promise<Car[]>;
   createSpecifications({
     carId,

@@ -40,6 +40,11 @@ export class CarsRepository implements CarsRepositoryInterface {
     return car;
   }
 
+  async findById(id: string) {
+    const car = await prisma.car.findFirst({ where: { id } });
+    return car;
+  }
+
   async listAvailableCars({
     name,
     brand,
@@ -61,10 +66,13 @@ export class CarsRepository implements CarsRepositoryInterface {
     return cars;
   }
 
-  createSpecifications({
+  async createSpecifications({
     carId,
     specifications,
   }: CreateCarSpecificationsDTO): Promise<void> {
-    throw new Error("Method not implemented.");
+    await prisma.car.update({
+      where: { id: carId },
+      data: { specifications: { create: specifications } },
+    });
   }
 }

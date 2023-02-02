@@ -1,14 +1,19 @@
 import { Car } from "../../../entities/Car";
+import { Specification } from "../../../entities/Specification";
 import {
   CreateCarDTO,
   CarsRepositoryInterface,
   ListCarDTO,
   CreateCarSpecificationsDTO,
 } from "../../CarsRepositoryInterface";
-import { SpecificationsRepository } from "./SpecificationsRepository";
+
+interface CarInMemory extends Car {
+  specifications: Specification[];
+}
 
 export class CarsRepository implements CarsRepositoryInterface {
-  cars: Car[] = [];
+  cars: CarInMemory[] = [];
+
   async create({
     name,
     description,
@@ -18,8 +23,8 @@ export class CarsRepository implements CarsRepositoryInterface {
     brand,
     categoryId,
   }: CreateCarDTO) {
-    this.cars.push(
-      new Car(
+    this.cars.push({
+      ...new Car(
         name,
         description,
         dailyRate,
@@ -27,8 +32,9 @@ export class CarsRepository implements CarsRepositoryInterface {
         fineAmount,
         brand,
         categoryId
-      )
-    );
+      ),
+      specifications: [],
+    });
   }
 
   async findByLicensePlate(licensePlate: string) {
@@ -38,6 +44,11 @@ export class CarsRepository implements CarsRepositoryInterface {
 
   async findByName(name: string) {
     const car = this.cars.find((car) => car.name === name);
+    return car;
+  }
+
+  async findById(id: string) {
+    const car = this.cars.find((car) => car.id === id);
     return car;
   }
 
@@ -61,14 +72,9 @@ export class CarsRepository implements CarsRepositoryInterface {
 
   async createSpecifications({
     carId,
-    specificationsId,
+    specifications,
   }: CreateCarSpecificationsDTO): Promise<void> {
     const car = this.cars.find((car) => car.id === carId);
-    const specificationRepository = new SpecificationsRepository();
-    const specifications = await specificationRepository.list();
-    specificationsId.forEach((id) => {
-      const spec = specifications.find((spec) => spec.id === id);
-      car.specifications.push(spec);
-    });
+    car.specifications = specifications;
   }
 }
