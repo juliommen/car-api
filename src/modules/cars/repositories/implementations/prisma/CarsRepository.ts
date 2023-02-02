@@ -1,10 +1,11 @@
 import { prisma } from "../../../../../libs/prismaClient";
 import { Car } from "../../../entities/Car";
+import { Specification } from "../../../entities/Specification";
 import {
   CreateCarDTO,
   CarsRepositoryInterface,
   ListCarDTO,
-  CreateCarSpecificationsDTO,
+  LinkCarSpecificationsDTO,
 } from "../../CarsRepositoryInterface";
 
 export class CarsRepository implements CarsRepositoryInterface {
@@ -69,10 +70,17 @@ export class CarsRepository implements CarsRepositoryInterface {
   async createSpecifications({
     carId,
     specifications,
-  }: CreateCarSpecificationsDTO): Promise<void> {
+  }: LinkCarSpecificationsDTO): Promise<void> {
+    const specObj = specifications.map((spec) => {
+      return { id: spec.id };
+    });
     await prisma.car.update({
       where: { id: carId },
-      data: { specifications: { create: specifications } },
+      data: {
+        specifications: {
+          connect: specObj,
+        },
+      },
     });
   }
 }

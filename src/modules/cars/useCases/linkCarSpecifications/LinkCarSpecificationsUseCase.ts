@@ -5,13 +5,13 @@ import { CarsRepositoryInterface } from "../../repositories/CarsRepositoryInterf
 import { SpecificationsRepository } from "../../repositories/implementations/prisma/SpecificationsRepository";
 
 @injectable()
-class CreateCarSpecificationsUseCase {
+class LinkCarSpecificationsUseCase {
   constructor(
     @inject("CarsRepository")
     private carsRepository: CarsRepositoryInterface
   ) {}
   async execute({ carId, specificationsId }) {
-    const car = this.carsRepository.findById(carId);
+    const car = await this.carsRepository.findById(carId);
     if (!car) {
       throw new AppError("Car does not exist.");
     }
@@ -25,11 +25,11 @@ class CreateCarSpecificationsUseCase {
       throw new AppError("One or more specifications do not exist.");
     }
 
-    this.carsRepository.createSpecifications({
+    await this.carsRepository.createSpecifications({
       carId: carId as string,
       specifications: filteredListOfSpecifications,
     });
   }
 }
 
-export { CreateCarSpecificationsUseCase };
+export { LinkCarSpecificationsUseCase };

@@ -4,7 +4,7 @@ import {
   CreateCarDTO,
   CarsRepositoryInterface,
   ListCarDTO,
-  CreateCarSpecificationsDTO,
+  LinkCarSpecificationsDTO,
 } from "../../CarsRepositoryInterface";
 
 interface CarInMemory extends Car {
@@ -73,7 +73,7 @@ export class CarsRepository implements CarsRepositoryInterface {
   async createSpecifications({
     carId,
     specifications,
-  }: CreateCarSpecificationsDTO): Promise<void> {
+  }: LinkCarSpecificationsDTO): Promise<void> {
     const car = this.cars.find((car) => car.id === carId);
     car.specifications = specifications;
   }
