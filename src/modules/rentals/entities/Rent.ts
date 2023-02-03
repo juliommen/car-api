@@ -5,28 +5,21 @@ export class Rent {
   carId: string;
   userId: string;
   startDate: Date;
-  endDate: Date;
   expectedReturnDate: Date;
-  total: number;
   createdAt: Date;
-  updatedAt: Date;
+  endDate: Date | undefined;
+  total: number | undefined;
+  updatedAt: Date | undefined;
 
-  constructor(
-    carId: string,
-    userId: string,
-    startDate: Date,
-    endDate: Date,
-    expectedReturnDate: Date,
-    total: number
-  ) {
+  constructor(carId: string, userId: string, expectedReturnDate: Date) {
     this.id = randomUUID();
     this.carId = carId;
     this.userId = userId;
-    this.startDate = startDate;
-    this.endDate = endDate;
+    this.startDate = new Date();
     this.expectedReturnDate = expectedReturnDate;
-    this.total = total;
     this.createdAt = new Date();
-    this.updatedAt = new Date();
+    this.endDate = undefined;
+    this.total = undefined;
+    this.updatedAt = undefined;
   }
 }

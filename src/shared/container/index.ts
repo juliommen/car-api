@@ -8,6 +8,8 @@ import { CarsRepository } from "../../modules/cars/repositories/implementations/
 import { CategoriesRepository } from "../../modules/cars/repositories/implementations/prisma/CategoriesRepository";
 import { SpecificationsRepository } from "../../modules/cars/repositories/implementations/prisma/SpecificationsRepository";
 import { SpecificationsRepositoryInterface } from "../../modules/cars/repositories/SpecificationsRepositoryInterface";
+import { RentRepository } from "../../modules/rentals/repositories/implementations/prisma/RentRepository";
+import { RentRepositoryInterface } from "../../modules/rentals/repositories/RentRepositoryInterface";
 import { UsersRepository } from "../../modules/users/repositories/implementations/prisma/UsersRepository";
 import { UsersRepositoryInterface } from "../../modules/users/repositories/UsersRepositoryInterface";
 
@@ -34,4 +36,9 @@ container.registerSingleton<CarsRepositoryInterface>(
 container.registerSingleton<CarImageRepositoryInterface>(
   "CarImageRepository",
   CarImageRepository
+);
+
+container.registerSingleton<RentRepositoryInterface>(
+  "RentRepository",
+  RentRepository
 );
