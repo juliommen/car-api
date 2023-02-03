@@ -27,7 +27,7 @@ class LinkCarSpecificationsUseCase {
 
     await this.carsRepository.createSpecifications({
       carId: carId as string,
-      specifications: filteredListOfSpecifications,
+      specificationsId: specificationsId as string[],
     });
   }
 }

@@ -8,7 +8,7 @@ import {
 } from "../../CarsRepositoryInterface";
 
 interface CarInMemory extends Car {
-  specifications: Specification[];
+  specificationsId: string[];
 }
 
 export class CarsRepository implements CarsRepositoryInterface {
@@ -33,7 +33,7 @@ export class CarsRepository implements CarsRepositoryInterface {
         brand,
         categoryId
       ),
-      specifications: [],
+      specificationsId: [],
     });
   }
 
@@ -72,9 +72,9 @@ export class CarsRepository implements CarsRepositoryInterface {
 
   async createSpecifications({
     carId,
-    specifications,
+    specificationsId,
   }: LinkCarSpecificationsDTO): Promise<void> {
     const car = this.cars.find((car) => car.id === carId);
-    car.specifications = specifications;
+    car.specificationsId = specificationsId;
   }
 }

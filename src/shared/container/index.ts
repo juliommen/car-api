@@ -1,7 +1,9 @@
 import { container } from "tsyringe";
 
+import { CarImageRepositoryInterface } from "../../modules/cars/repositories/CarImageRepositoryInterface";
 import { CarsRepositoryInterface } from "../../modules/cars/repositories/CarsRepositoryInterface";
 import { CategoriesRepositoryInterface } from "../../modules/cars/repositories/CategoriesRepositoryInterface";
+import { CarImageRepository } from "../../modules/cars/repositories/implementations/prisma/CarImageRepository";
 import { CarsRepository } from "../../modules/cars/repositories/implementations/prisma/CarsRepository";
 import { CategoriesRepository } from "../../modules/cars/repositories/implementations/prisma/CategoriesRepository";
 import { SpecificationsRepository } from "../../modules/cars/repositories/implementations/prisma/SpecificationsRepository";
@@ -27,4 +29,9 @@ container.registerSingleton<UsersRepositoryInterface>(
 container.registerSingleton<CarsRepositoryInterface>(
   "CarsRepository",
   CarsRepository
+);
+
+container.registerSingleton<CarImageRepositoryInterface>(
+  "CarImageRepository",
+  CarImageRepository
 );

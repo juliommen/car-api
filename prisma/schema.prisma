@@ -35,6 +35,7 @@ model User {
   admin         Boolean
   createdAt     DateTime @default(now())
   avatar        String
+  Rent          Rent[]
 }
 
 model Car {
@@ -51,11 +52,27 @@ model Car {
   createdAt      DateTime        @default(now())
   specifications Specification[]
   CarsImages     CarsImages[]
+  Rent           Rent[]
 }
 
 model CarsImages {
   id        String   @id
+  image     String
   car       Car      @relation(fields: [carId], references: [id])
   carId     String
   createdAt DateTime @default(now())
+}
+
+model Rent {
+  id                 String   @id
+  car                Car      @relation(fields: [carId], references: [id])
+  carId              String
+  user               User     @relation(fields: [userId], references: [id])
+  userId             String
+  startDate          DateTime
+  endDate            DateTime
+  expectedReturnDate DateTime
+  total              Float
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @default(now())
 }

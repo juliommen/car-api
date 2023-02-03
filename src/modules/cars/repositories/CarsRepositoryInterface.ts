@@ -19,7 +19,7 @@ export interface ListCarDTO {
 
 export interface LinkCarSpecificationsDTO {
   carId: string;
-  specifications: Specification[];
+  specificationsId: string[];
 }
 
 export interface CarsRepositoryInterface {
@@ -38,6 +38,6 @@ export interface CarsRepositoryInterface {
   listAvailableCars({ name, brand, categoryId }: ListCarDTO): Promise<Car[]>;
   createSpecifications({
     carId,
-    specifications,
+    specificationsId,
   }: LinkCarSpecificationsDTO): Promise<void>;
 }
