@@ -13,6 +13,15 @@ services:
       - POSTGRES_DB=rentcar
     volumes:
       - postgres:/var/lib/postgresql/data
+  
+  db-test:
+    image: postgres
+    environment: 
+      - POSTGRES_DB=rentcar
+      - POSTGRES_USER=rentcar
+      - POSTGRES_PASSWORD=rentcar
+    ports:
+      - 5431:5432
 
   # Important: Change localhost to postgres on .env first
   # app:
