@@ -40,4 +40,5 @@ export interface CarsRepositoryInterface {
     carId,
     specificationsId,
   }: LinkCarSpecificationsDTO): Promise<void>;
+  updateAvailable(id: string, available: boolean): Promise<void>;
 }

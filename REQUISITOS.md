@@ -51,6 +51,4 @@ O aluguel deve ter duração mínima de 24 horas.
 Não se pode cadastrar um novo aluguel para o mesmo usuário.
 Não se pode cadastra um novo aluguel para um carro indisponível.
 
-
-
 etc etc

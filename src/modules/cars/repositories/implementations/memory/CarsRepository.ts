@@ -77,4 +77,9 @@ export class CarsRepository implements CarsRepositoryInterface {
     const car = this.cars.find((car) => car.id === carId);
     car.specificationsId = specificationsId;
   }
+
+  async updateAvailable(id: string, available: boolean): Promise<void> {
+    const car = this.cars.find((car) => car.id === id);
+    car.available = available;
+  }
 }

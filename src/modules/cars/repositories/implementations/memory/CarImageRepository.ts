@@ -6,7 +6,7 @@ import {
 
 export class CarImageRepository implements CarImageRepositoryInterface {
   private carImage: CarImage[] = [];
-  async create({ name, carId }: CreateCarImageDTO): Promise<void> {
-    this.carImage.push(new CarImage(name, carId));
+  async create({ image, carId }: CreateCarImageDTO): Promise<void> {
+    this.carImage.push(new CarImage(image, carId));
   }
 }

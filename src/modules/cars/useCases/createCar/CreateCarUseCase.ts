@@ -36,15 +36,19 @@ class CreateCarUseCase {
         401
       );
     }
-    await this.carsRepository.create({
-      name,
-      description,
-      dailyRate,
-      licensePlate,
-      fineAmount,
-      brand,
-      categoryId,
-    });
+    try {
+      await this.carsRepository.create({
+        name,
+        description,
+        dailyRate,
+        licensePlate,
+        fineAmount,
+        brand,
+        categoryId,
+      });
+    } catch (error) {
+      throw new AppError("Could not create. Check the information sent.", 401);
+    }
   }
 }
 

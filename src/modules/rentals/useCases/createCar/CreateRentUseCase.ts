@@ -2,6 +2,7 @@ import "reflect-metadata";
 import { inject, injectable } from "tsyringe";
 
 import { AppError } from "../../../../errors/AppError";
+import { CarsRepositoryInterface } from "../../../cars/repositories/CarsRepositoryInterface";
 import { Rent } from "../../entities/Rent";
 import {
   RentRepositoryInterface,
@@ -12,7 +13,9 @@ import {
 class CreateRentUseCase {
   constructor(
     @inject("RentRepository")
-    private rentRepository: RentRepositoryInterface
+    private rentRepository: RentRepositoryInterface,
+    @inject("CarsRepository")
+    private carsRepository: CarsRepositoryInterface
   ) {}
 
   async execute({ carId, userId, expectedReturnDate }: CreateRentDTO) {
@@ -31,6 +34,8 @@ class CreateRentUseCase {
       userId,
       expectedReturnDate,
     });
+
+    await this.carsRepository.updateAvailable(carId, false);
   }
 }
 

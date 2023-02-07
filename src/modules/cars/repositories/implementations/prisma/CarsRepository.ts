@@ -82,4 +82,13 @@ export class CarsRepository implements CarsRepositoryInterface {
       },
     });
   }
+
+  async updateAvailable(id: string, available: boolean): Promise<void> {
+    await prisma.car.update({
+      where: { id },
+      data: {
+        available,
+      },
+    });
+  }
 }
