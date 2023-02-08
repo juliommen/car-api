@@ -28,4 +28,17 @@ export class RentRepository implements RentRepositoryInterface {
     );
     return userRent;
   }
+
+  async findRentById(rentId: string): Promise<Rent> {
+    const rent = this.rent.find((rent) => rent.id === rentId);
+    return rent;
+  }
+
+  async endRent(rent: Rent, endDate: Date, total: number): Promise<Rent> {
+    const rentToUpdate = await this.findRentById(rent.id);
+    rentToUpdate.endDate = endDate;
+    rentToUpdate.total = total;
+
+    return rentToUpdate;
+  }
 }
