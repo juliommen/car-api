@@ -11,7 +11,9 @@ import { SpecificationsRepositoryInterface } from "../../modules/cars/repositori
 import { RentRepository } from "../../modules/rentals/repositories/implementations/prisma/RentRepository";
 import { RentRepositoryInterface } from "../../modules/rentals/repositories/RentRepositoryInterface";
 import { UsersRepository } from "../../modules/users/repositories/implementations/prisma/UsersRepository";
+import { UserTokenRepository } from "../../modules/users/repositories/implementations/prisma/UserTokenRepository";
 import { UsersRepositoryInterface } from "../../modules/users/repositories/UsersRepositoryInterface";
+import { UserTokenRepositoryInterface } from "../../modules/users/repositories/UserTokenRepositoryInterface";
 
 container.registerSingleton<CategoriesRepositoryInterface>(
   "CategoriesRepository",
@@ -26,6 +28,11 @@ container.registerSingleton<SpecificationsRepositoryInterface>(
 container.registerSingleton<UsersRepositoryInterface>(
   "UsersRepository",
   UsersRepository
+);
+
+container.registerSingleton<UserTokenRepositoryInterface>(
+  "UserTokenRepository",
+  UserTokenRepository
 );
 
 container.registerSingleton<CarsRepositoryInterface>(

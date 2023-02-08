@@ -27,15 +27,16 @@ model Specification {
 }
 
 model User {
-  id            String   @id
+  id            String      @id
   name          String
   email         String
   password      String
   driverLicense String
   admin         Boolean
-  createdAt     DateTime @default(now())
+  createdAt     DateTime    @default(now())
   avatar        String
   Rent          Rent[]
+  UserToken     UserToken[]
 }
 
 model Car {
@@ -75,4 +76,12 @@ model Rent {
   total              Float?
   createdAt          DateTime  @default(now())
   updatedAt          DateTime?
+}
+
+model UserToken {
+  id           String   @id
+  refreshToken String
+  createdAt    DateTime @default(now())
+  user         User     @relation(fields: [userId], references: [id])
+  userId       String
 }
