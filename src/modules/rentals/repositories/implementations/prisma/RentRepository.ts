@@ -47,4 +47,22 @@ export class RentRepository implements RentRepositoryInterface {
     });
     return userRent;
   }
+
+  async findRentById(rentId: string): Promise<Rent> {
+    const rent = await prisma.rent.findFirst({
+      where: {
+        id: rentId,
+      },
+    });
+    return rent;
+  }
+
+  async endRent(rent: Rent, endDate: Date, total: number): Promise<Rent> {
+    const rentUpdated = await prisma.rent.update({
+      where: { id: rent.id },
+      data: { endDate, total },
+    });
+
+    return rentUpdated;
+  }
 }
