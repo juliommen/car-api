@@ -5,10 +5,11 @@ import { RefreshTokenUseCase } from "./RefreshTokenUseCase";
 
 class RefreshTokenController {
   async handle(request: Request, response: Response) {
-    const { password, email } = request.headers.authorization;
+    const { refreshToken } =
+      request.body || request.headers["x-access-token"] || request.query;
     const refreshTokenUseCase = container.resolve(RefreshTokenUseCase);
-    const userData = await refreshTokenUseCase.execute({ email, password });
-    return response.json(userData);
+    const newRefreshToken = await refreshTokenUseCase.execute(refreshToken);
+    return response.json(newRefreshToken);
   }
 }
 

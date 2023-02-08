@@ -1,3 +1,5 @@
+import { UserToken } from "@prisma/client";
+
 export interface CreateUserTokenDTO {
   refreshToken: string;
   userId: string;
@@ -5,4 +7,6 @@ export interface CreateUserTokenDTO {
 
 export interface UserTokenRepositoryInterface {
   create({ refreshToken, userId }: CreateUserTokenDTO): Promise<void>;
+  findById(userId: string, refreshToken: string): Promise<UserToken>;
+  deleteById(refreshTokenId: string): Promise<void>;
 }
