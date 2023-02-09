@@ -39,11 +39,9 @@ class ResetPwdUseCase {
 
       await this.userTokenRepository.deleteById(refreshTokenFound.id);
 
-      const hasPwd = await hash(pwd, 8);
+      const hashPwd = await hash(pwd, 8);
 
-      await this.usersRepository.updatePassword(userId, hasPwd);
-
-      return "";
+      await this.usersRepository.updatePassword(userId, hashPwd);
     } catch (error) {
       throw new AppError("Invalid recovery token!", 401);
     }
