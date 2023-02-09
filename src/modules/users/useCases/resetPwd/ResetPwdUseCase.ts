@@ -1,9 +1,10 @@
-import "reflect-metadata";
+import { hash } from "bcrypt";
 import { sign, verify } from "jsonwebtoken";
 import { inject, injectable } from "tsyringe";
 
 import auth from "../../../../config/auth";
 import { AppError } from "../../../../errors/AppError";
+import { UsersRepositoryInterface } from "../../repositories/UsersRepositoryInterface";
 import { UserTokenRepositoryInterface } from "../../repositories/UserTokenRepositoryInterface";
 
 interface Payload {
@@ -12,49 +13,41 @@ interface Payload {
 }
 
 @injectable()
-class RefreshTokenUseCase {
+class ResetPwdUseCase {
   constructor(
+    @inject("UsersRepository")
+    private usersRepository: UsersRepositoryInterface,
     @inject("UserTokenRepository")
     private userTokenRepository: UserTokenRepositoryInterface
   ) {}
-  async execute(refreshToken: string) {
+
+  async execute(token: string, pwd: string) {
     try {
-      const { sub: userId, email } = verify(
-        refreshToken,
+      const { sub: userId } = verify(
+        token,
         auth.secretForRefreshToken
       ) as Payload;
 
       const refreshTokenFound = await this.userTokenRepository.findById(
         userId,
-        refreshToken
+        token
       );
 
       if (!refreshTokenFound) {
-        throw new AppError("Refresh token does not exist");
+        throw new AppError("Recovery token does not exist");
       }
 
       await this.userTokenRepository.deleteById(refreshTokenFound.id);
 
-      const newRefreshToken = sign({ email }, auth.secretForRefreshToken, {
-        subject: userId,
-        expiresIn: auth.expirationRefreshToken,
-      });
+      const hasPwd = await hash(pwd, 8);
 
-      const newToken = sign({}, auth.secretForClientToken, {
-        subject: userId,
-        expiresIn: auth.expirationClientToken,
-      });
+      await this.usersRepository.updatePassword(userId, hasPwd);
 
-      await this.userTokenRepository.create({
-        refreshToken: newRefreshToken,
-        userId,
-      });
-
-      return { newToken, newRefreshToken };
+      return "";
     } catch (error) {
-      throw new AppError("Invalid refresh token!", 401);
+      throw new AppError("Invalid recovery token!", 401);
     }
   }
 }
 
-export { RefreshTokenUseCase };
+export { ResetPwdUseCase };

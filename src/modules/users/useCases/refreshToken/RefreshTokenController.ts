@@ -8,8 +8,8 @@ class RefreshTokenController {
     const { refreshToken } =
       request.body || request.headers["x-access-token"] || request.query;
     const refreshTokenUseCase = container.resolve(RefreshTokenUseCase);
-    const newRefreshToken = await refreshTokenUseCase.execute(refreshToken);
-    return response.json(newRefreshToken);
+    const newTokens = await refreshTokenUseCase.execute(refreshToken);
+    return response.json(newTokens);
   }
 }
 

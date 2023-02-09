@@ -14,6 +14,6 @@ router.use("/specifications", specificationsRoutes);
 router.use("/users", usersRoutes);
 router.use("/cars", carRoutes);
 router.use("/rents", rentRoutes);
-router.use(authRoutes);
+router.use("/sessions", authRoutes);
 
 export { router };

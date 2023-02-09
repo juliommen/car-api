@@ -30,4 +30,9 @@ export class UsersRepository implements UsersRepositoryInterface {
     const user = await this.findById(userId);
     user.avatar = avatarFile;
   }
+
+  async updatePassword(userId: string, pwd: string): Promise<void> {
+    const user = await this.findById(userId);
+    user.password = pwd;
+  }
 }

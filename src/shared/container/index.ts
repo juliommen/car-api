@@ -14,6 +14,8 @@ import { UsersRepository } from "../../modules/users/repositories/implementation
 import { UserTokenRepository } from "../../modules/users/repositories/implementations/prisma/UserTokenRepository";
 import { UsersRepositoryInterface } from "../../modules/users/repositories/UsersRepositoryInterface";
 import { UserTokenRepositoryInterface } from "../../modules/users/repositories/UserTokenRepositoryInterface";
+import { MailProvider } from "../mailProvider/implementations/ethereal/MailProvider";
+import { MailProviderInterface } from "../mailProvider/MailProviderInterface";
 
 container.registerSingleton<CategoriesRepositoryInterface>(
   "CategoriesRepository",
@@ -48,4 +50,9 @@ container.registerSingleton<CarImageRepositoryInterface>(
 container.registerSingleton<RentRepositoryInterface>(
   "RentRepository",
   RentRepository
+);
+
+container.registerInstance<MailProviderInterface>(
+  "MailProvider",
+  new MailProvider()
 );

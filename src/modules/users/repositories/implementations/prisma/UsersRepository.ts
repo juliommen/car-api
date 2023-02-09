@@ -34,4 +34,11 @@ export class UsersRepository implements UsersRepositoryInterface {
       data: { avatar: avatarFile },
     });
   }
+
+  async updatePassword(userId: string, pwd: string) {
+    await prisma.user.update({
+      where: { id: userId },
+      data: { password: pwd },
+    });
+  }
 }

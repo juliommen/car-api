@@ -19,4 +19,5 @@ export interface UsersRepositoryInterface {
   findById(id: string): Promise<User>;
   findByEmail(email: string): Promise<User>;
   updateAvatar(avatarFile: string, userId: string): Promise<void>;
+  updatePassword(userId: string, pwd: string): Promise<void>;
 }

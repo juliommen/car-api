@@ -2,11 +2,13 @@ import { hash } from "bcrypt";
 
 import { AppError } from "../../../../errors/AppError";
 import { UsersRepository } from "../../repositories/implementations/memory/UsersRepository";
+import { UserTokenRepository } from "../../repositories/implementations/memory/UserTokenRepository";
 import { CreateUserDTO } from "../../repositories/UsersRepositoryInterface";
 import { AuthUserUseCase } from "./AuthUserUseCase";
 
 let authUserUseCase: AuthUserUseCase;
 let usersRepository: UsersRepository;
+let userTokenRepo: UserTokenRepository;
 let user: CreateUserDTO;
 
 describe("Authenticate User Tests", () => {
@@ -21,7 +23,7 @@ describe("Authenticate User Tests", () => {
       driverLicense: "123",
     };
     usersRepository.create(user);
-    authUserUseCase = new AuthUserUseCase(usersRepository);
+    authUserUseCase = new AuthUserUseCase(usersRepository, userTokenRepo);
   });
   it("Should be able to authenticate user", async () => {
     const token = await authUserUseCase.execute({

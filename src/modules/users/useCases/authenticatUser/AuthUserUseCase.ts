@@ -38,19 +38,19 @@ class AuthUserUseCase {
       throw new AppError("Email or password incorrect.", 401);
     }
 
-    const token = sign({}, auth.secretForClientToken, {
+    const secretToken = auth.secretForClientToken;
+
+    const token = sign({}, secretToken, {
       subject: user.id,
       expiresIn: auth.expirationClientToken,
     });
 
-    const refreshToken = sign(
-      { email: user.email },
-      auth.secretForRefreshToken,
-      {
-        subject: user.id,
-        expiresIn: auth.expirationRefreshToken,
-      }
-    );
+    const secretRefreshToken = auth.secretForRefreshToken;
+
+    const refreshToken = sign({ email: user.email }, secretRefreshToken, {
+      subject: user.id,
+      expiresIn: auth.expirationRefreshToken,
+    });
 
     this.usersTokenRepository.create({
       refreshToken,
