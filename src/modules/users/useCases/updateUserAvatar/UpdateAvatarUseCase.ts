@@ -1,6 +1,6 @@
 import { inject, injectable } from "tsyringe";
 
-import { deleteFile } from "../../../../utils/deleteFile";
+import { StorageInterface } from "../../../../providers/storage/StorageInterface";
 import { UsersRepositoryInterface } from "../../repositories/UsersRepositoryInterface";
 
 interface Request {
@@ -12,12 +12,18 @@ interface Request {
 class UpdateAvatarUseCase {
   constructor(
     @inject("UsersRepository")
-    private usersRepository: UsersRepositoryInterface
+    private usersRepository: UsersRepositoryInterface,
+    @inject("Storage")
+    private storage: StorageInterface
   ) {}
 
   async execute({ avatarFile, userId }: Request) {
-    await this.usersRepository.updateAvatar(avatarFile, userId);
-    await deleteFile(`./tmp/avatar/${avatarFile}`);
+    const user = await this.usersRepository.findById(userId);
+    if (user.avatar) {
+      await this.storage.delete(user.avatar, "avatar");
+    }
+    const url = await this.storage.save(avatarFile, "avatar");
+    await this.usersRepository.updateAvatar(url, userId);
   }
 }
 

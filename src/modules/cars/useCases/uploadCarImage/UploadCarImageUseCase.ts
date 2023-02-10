@@ -1,7 +1,7 @@
 import { inject, injectable } from "tsyringe";
 
 import { AppError } from "../../../../errors/AppError";
-import { deleteFile } from "../../../../utils/deleteFile";
+import { StorageInterface } from "../../../../providers/storage/StorageInterface";
 import { CarImageRepositoryInterface } from "../../repositories/CarImageRepositoryInterface";
 import { CarsRepositoryInterface } from "../../repositories/CarsRepositoryInterface";
 
@@ -16,7 +16,9 @@ class UploadCarImageUseCase {
     @inject("CarImageRepository")
     private categoriesRepository: CarImageRepositoryInterface,
     @inject("CarsRepository")
-    private carsRepository: CarsRepositoryInterface
+    private carsRepository: CarsRepositoryInterface,
+    @inject("Storage")
+    private storage: StorageInterface
   ) {}
 
   async execute({ carId, images }: CarImagesRequest) {
@@ -28,8 +30,8 @@ class UploadCarImageUseCase {
       throw new AppError("No images sent");
     }
     images.map(async (image) => {
-      await this.categoriesRepository.create({ carId, image });
-      await deleteFile(`./tmp/carImages/${image}`);
+      const url = await this.storage.save(image, "car");
+      await this.categoriesRepository.create({ carId, image: url });
     });
   }
 }

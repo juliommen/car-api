@@ -6,8 +6,8 @@ import swaggerUI from "swagger-ui-express";
 import { AppError } from "./errors/AppError";
 import { router } from "./routes/index";
 import swaggerFile from "./swagger.json";
-
-import "./providers/container/implementations/tsyringe/ContainerProvider";
+import "./providers/container/implementations/tsyringe/Container";
+import uploadFile from "./utils/uploadFile";
 
 const app = express();
 
@@ -16,6 +16,8 @@ app.use(express.json());
 app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(swaggerFile));
 
 app.use(router);
+
+app.use("/tmp", express.static(uploadFile.tmpFolder));
 
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   if (err instanceof AppError) {

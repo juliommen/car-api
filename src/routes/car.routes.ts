@@ -7,7 +7,9 @@ import { CreateCarController } from "../modules/cars/useCases/createCar/CreateCa
 import { LinkCarSpecificationsController } from "../modules/cars/useCases/linkCarSpecifications/LinkCarSpecificationsController";
 import { ListCarsController } from "../modules/cars/useCases/listCars/ListCarsController";
 import { UploadCarImageController } from "../modules/cars/useCases/uploadCarImage/UploadCarImageController";
-import { uploadFile } from "../utils/uploadFile";
+import upload from "../utils/uploadFile";
+
+const uploadImages = multer(upload);
 
 export const carRoutes = Router();
 
@@ -23,5 +25,8 @@ carRoutes.use(verifyAdmin);
 carRoutes.post("/", createCarController.handle);
 carRoutes.post("/specifications/:carId", linkCarSpecifications.handle);
 
-const upload = multer(uploadFile("./tmp/carImages"));
-carRoutes.post("/images/:carId", upload.array("images"), uploadCarImage.handle);
+carRoutes.post(
+  "/images/:carId",
+  uploadImages.array("images"),
+  uploadCarImage.handle
+);

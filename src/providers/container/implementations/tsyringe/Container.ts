@@ -16,6 +16,8 @@ import { UsersRepositoryInterface } from "../../../../modules/users/repositories
 import { UserTokenRepositoryInterface } from "../../../../modules/users/repositories/UserTokenRepositoryInterface";
 import { MailProvider } from "../../../mail/implementations/ethereal/MailProvider";
 import { MailProviderInterface } from "../../../mail/MailProviderInterface";
+import { Storage } from "../../../storage/implementations/memory/Storage";
+import { StorageInterface } from "../../../storage/StorageInterface";
 
 container.registerSingleton<CategoriesRepositoryInterface>(
   "CategoriesRepository",
@@ -56,3 +58,5 @@ container.registerInstance<MailProviderInterface>(
   "MailProvider",
   new MailProvider()
 );
+
+container.registerSingleton<StorageInterface>("Storage", Storage);
