@@ -1,4 +1,4 @@
-import { UserToken } from "@prisma/client";
+import { UserToken } from "../entities/UserToken";
 
 export interface CreateUserTokenDTO {
   refreshToken: string;

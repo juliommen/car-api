@@ -1,4 +1,4 @@
-import { prisma } from "../../../../../libs/prismaClient";
+import { prisma } from "../../../../../utils/prismaClient";
 import { UserToken } from "../../../entities/UserToken";
 import {
   CreateUserTokenDTO,

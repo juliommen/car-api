@@ -1,4 +1,4 @@
-import { prisma } from "../../../../../libs/prismaClient";
+import { prisma } from "../../../../../utils/prismaClient";
 import { Rent } from "../../../entities/Rent";
 import {
   CreateRentDTO,

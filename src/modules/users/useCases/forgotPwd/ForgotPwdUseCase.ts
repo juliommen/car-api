@@ -4,7 +4,7 @@ import { inject, injectable } from "tsyringe";
 
 import auth from "../../../../config/auth";
 import { AppError } from "../../../../errors/AppError";
-import { MailProviderInterface } from "../../../../shared/mailProvider/MailProviderInterface";
+import { MailProviderInterface } from "../../../../providers/mail/MailProviderInterface";
 import { UsersRepositoryInterface } from "../../repositories/UsersRepositoryInterface";
 import { UserTokenRepositoryInterface } from "../../repositories/UserTokenRepositoryInterface";
 
