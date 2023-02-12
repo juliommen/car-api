@@ -13,27 +13,28 @@ services:
       - POSTGRES_DB=rentcar
     volumes:
       - postgres:/var/lib/postgresql/data
-  
-  db-test:
-    image: postgres
-    environment: 
-      - POSTGRES_DB=rentcar
-      - POSTGRES_USER=rentcar
-      - POSTGRES_PASSWORD=rentcar
-    ports:
-      - 5431:5432
+
+  # For test database container assembling 
+  # db-test:
+  #   image: postgres
+  #   environment: 
+  #     - POSTGRES_DB=rentcar
+  #     - POSTGRES_USER=rentcar
+  #     - POSTGRES_PASSWORD=rentcar
+  #   ports:
+  #     - 5431:5432
 
   # Important: Change localhost to postgres on .env first
-  # app:
-  #   build: .
-  #   container_name: rentcar
-  #   depends_on:
-  #     - postgres
-  #   ports:
-  #     - '3333:3333'
-  #   volumes:
-  #     - .:/usr/app
-  #   restart: always
+  app:
+    build: .
+    container_name: rentcar
+    depends_on:
+      - postgres
+    ports:
+      - '3333:3333'
+    volumes:
+      - .:/usr/app
+    restart: always
 
 
 volumes:
