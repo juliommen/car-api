@@ -39,6 +39,7 @@ jobs:
           script: |
             cd ~/car-api
             npx prisma migrate deploy
+            npx prisma generate
             pm2 restart car-api
 
   
