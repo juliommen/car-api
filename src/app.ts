@@ -1,4 +1,5 @@
 import "reflect-metadata";
+import cors from "cors";
 import express, { NextFunction, Request, Response } from "express";
 import "express-async-errors";
 import swaggerUI from "swagger-ui-express";
@@ -14,7 +15,7 @@ const app = express();
 app.use(express.json());
 
 app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(swaggerFile));
-
+app.use(cors());
 app.use(router);
 
 app.use("/tmp", express.static(uploadFile.tmpFolder));
