@@ -19,6 +19,8 @@
   },
   "dependencies": {
     "@prisma/client": "^4.8.0",
+    "@sentry/node": "^7.37.2",
+    "@sentry/tracing": "^7.37.2",
     "aws-sdk": "^2.1312.0",
     "bcrypt": "^5.1.0",
     "cors": "^2.8.5",
