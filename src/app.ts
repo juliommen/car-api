@@ -5,12 +5,15 @@ import "express-async-errors";
 import swaggerUI from "swagger-ui-express";
 
 import { AppError } from "./errors/AppError";
+import { rateLimiterMiddleware } from "./middlewares/rateLimiterRedis";
 import { router } from "./routes/index";
 import swaggerFile from "./swagger.json";
 import "./providers/container/implementations/tsyringe/Container";
 import uploadFile from "./utils/uploadFile";
 
 const app = express();
+
+app.use(rateLimiterMiddleware);
 
 app.use(express.json());
 

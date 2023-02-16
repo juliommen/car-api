@@ -14,6 +14,11 @@ services:
       - POSTGRES_DB=rentcar
     volumes:
       - postgres:/var/lib/postgresql/data
+  
+  redis:
+    image: redis:alpine
+    ports: 
+      - 6379:6379
 
   # For test database container assembling 
   # db-test:
